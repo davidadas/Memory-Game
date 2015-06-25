@@ -18,22 +18,32 @@
   <body>
     <script>
       $(function() {
+          'use strict';
+        
           var canvas = document.getElementById('canvas');
           var stage = new createjs.Stage(canvas);
           var activeCards = [];
           var activeCard = null;
           var cardsFlipped = 0;
 
-          function startGame() {
-              activeCard = null;
-              cardsFlipped = 0;
-              initCards();
-              stage.update();
+          function getRandomColors() {
+            var defaultColors = [
+              'red', 'red',
+              'orange', 'orange',
+              'yellow', 'yellow',
+              'green', 'green',
+              'blue', 'blue',
+              'indigo', 'indigo',
+              'violet', 'violet'
+            ];
+
+            return _.shuffle(defaultColors);
           }
 
           function initCards() {
               var x = 5;
               var y = 5;
+
               _.each(getRandomColors(), function createCards(color, index) {
                   // In the real world, we'd scale the canvas depending on the view.
                   // For now, however, we're going to hard cap the resolution.
@@ -49,19 +59,6 @@
                   });
                   x += 60;
               });
-          }
-
-          function getRandomColors() {
-              var defaultColors = [
-                'red', 'red',
-                'orange', 'orange',
-                'yellow', 'yellow',
-                'green', 'green',
-                'blue', 'blue',
-                'indigo', 'indigo',
-                'violet', 'violet'
-              ];
-              return _.shuffle(defaultColors);
           }
 
           function flipCard(card) {
@@ -96,6 +93,13 @@
                   // I never did like a game with a clear ending.
                   startGame();
               }
+          }
+
+          function startGame() {
+            activeCard = null;
+            cardsFlipped = 0;
+            initCards();
+            stage.update();
           }
 
           startGame();
