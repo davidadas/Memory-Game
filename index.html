@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="UTF-8">
+    <title>Memory Game</title>
+    <script src="bower_components/easeljs/lib/easeljs-0.8.1.combined.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/lodash/lodash.min.js"></script>
+    <script src="CardView.js"></script>
+    <style>
+        #canvas {
+            height: 512px;
+            width: 512px;
+            border: 1px solid black;
+        }
+    </style>
+  </head>
+  <body>
+    <script>
+      $(function() {
+          var canvas = document.getElementById('canvas');
+          var stage = new createjs.Stage(canvas);
+          var activeCards = [];
+          var activeCard = null;
+          var cardsFlipped = 0;
+
+          function startGame() {
+              activeCard = null;
+              cardsFlipped = 0;
+              var x = 0;
+              var y = 0;
+              _.each(getColors(), function createCards(color, index) {
+                  // In the real world, we'd scale the canvas depending on the view.
+                  // For now, however, we're going to hard cap the resolution.
+                  if (index >= 5 && index % 5 === 0) {
+                      y += 50;
+                      x = 0;
+                  }
+                  var cardView = new CardView(color, x, y);
+                  activeCards.push(cardView);
+                  stage.addChild(cardView);
+                  cardView.addEventListener('click', function() {
+                      flipCard(cardView);
+                  });
+                  x += 60;
+              });
+              stage.update();
+          }
+
+          function flipCard(card) {
+              card.flip();
+              if (activeCard === null) {
+                  activeCard = card;
+              } else if (activeCard !== card) {
+                  if (activeCard.getColor() === card.getColor()) {
+                      // Match found.  Remove both cards.
+                      activeCard.removeAllEventListeners();
+                      card.removeAllEventListeners();
+                      cardsFlipped += 2;
+                      checkVictory();
+                  } else {
+                      // This is not a match; reset cards.
+                      activeCard.flip();
+                      card.flip();
+                  }
+                  activeCard = null;
+              } else {
+                  activeCard = null;
+              }
+              stage.update();
+          }
+
+          function getColors() {
+            var defaultColors = [
+                'red', 'red',
+                'orange', 'orange',
+                'yellow', 'yellow',
+                'green', 'green',
+                'blue', 'blue',
+                'indigo', 'indigo',
+                'violet', 'violet'
+            ];
+            return _.shuffle(defaultColors);
+          }
+
+          function checkVictory() {
+              if (cardsFlipped === activeCards.length) {
+                  // I never did like a game with a clear ending.
+                  startGame();
+              }
+          }
+
+          startGame();
+      });
+    </script>
+    <h1>Memory Game</h1>
+    <canvas id="canvas"></canvas>
+  </body>
+</html>

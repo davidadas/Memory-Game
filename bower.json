@@ -1,0 +1,14 @@
+{
+  "name": "Memory-Game",
+  "version": "0.0.1",
+  "homepage": "https://github.com/davidadas/Memory-Game",
+  "authors": [
+    "davidadas <djadams2007@gmail.com>"
+  ],
+  "description": "It's literally a game.",
+  "main": "index.html",
+  "dependencies": {
+    "easeljs": "~0.8.1",
+    "lodash": "~3.9.3"
+  }
+}
