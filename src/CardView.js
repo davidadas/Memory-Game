@@ -15,8 +15,10 @@ CardView.prototype.initialize = function(color, x, y) {
     vm.flip = function() {
         if (!isFlipped) {
             setColor(cardColor);
+            setSelected(true);
         } else {
             setColor('black');
+            setSelected(false);
         }
         isFlipped = !isFlipped;
     };
@@ -27,5 +29,13 @@ CardView.prototype.initialize = function(color, x, y) {
 
     function setColor(color) {
         vm.graphics.beginFill(color).drawRect(x, y, 50, 40);
+    }
+
+    function setSelected(isSelected) {
+        if (isSelected) {
+            vm.shadow = new createjs.Shadow("#222222", 1, 1, 1);
+        } else {
+            vm.shadow = null;
+        }
     }
 };
