@@ -59,8 +59,8 @@ function GameBoard(canvas) {
     function checkMatch(firstCard, secondCard) {
         if (firstCard.getColor() === secondCard.getColor()) {
             // Match found.  Remove both cards.
-            activeCard.removeAllEventListeners();
-            card.removeAllEventListeners();
+            firstCard.removeAllEventListeners();
+            secondCard.removeAllEventListeners();
             cardsFlipped += 2;
             checkVictory();
         } else {
