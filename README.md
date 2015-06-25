@@ -4,5 +4,5 @@
 * Play until your hands hurt
 
 ## Preview
-![Screenshot](http://i.imgur.com/HbycN62.jpg)
+![Screenshot](http://i.imgur.com/glbVCzW.jpg)
 
