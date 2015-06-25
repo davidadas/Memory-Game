@@ -27,14 +27,14 @@
           function startGame() {
               activeCard = null;
               cardsFlipped = 0;
-              var x = 0;
-              var y = 0;
+              var x = 5;
+              var y = 5;
               _.each(getColors(), function createCards(color, index) {
                   // In the real world, we'd scale the canvas depending on the view.
                   // For now, however, we're going to hard cap the resolution.
                   if (index >= 5 && index % 5 === 0) {
                       y += 50;
-                      x = 0;
+                      x = 5;
                   }
                   var cardView = new CardView(color, x, y);
                   activeCards.push(cardView);
