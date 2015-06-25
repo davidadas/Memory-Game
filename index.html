@@ -7,6 +7,7 @@
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/lodash/lodash.min.js"></script>
     <script src="src/CardView.js"></script>
+    <script src="src/GameBoard.js"></script>
     <style>
         #canvas {
             height: 512px;
@@ -19,90 +20,12 @@
     <script>
       $(function() {
           'use strict';
-        
+
           var canvas = document.getElementById('canvas');
           var stage = new createjs.Stage(canvas);
-          var activeCards = [];
-          var activeCard = null;
-          var cardsFlipped = 0;
+          var gameBoard = new GameBoard(stage);
 
-          function getRandomColors() {
-            var defaultColors = [
-              'red', 'red',
-              'orange', 'orange',
-              'yellow', 'yellow',
-              'green', 'green',
-              'blue', 'blue',
-              'indigo', 'indigo',
-              'violet', 'violet'
-            ];
-
-            return _.shuffle(defaultColors);
-          }
-
-          function initCards() {
-              var x = 5;
-              var y = 5;
-
-              _.each(getRandomColors(), function createCards(color, index) {
-                  // In the real world, we'd scale the canvas depending on the view.
-                  // For now, however, we're going to hard cap the resolution.
-                  if (index >= 5 && index % 5 === 0) {
-                    y += 50;
-                    x = 5;
-                  }
-                  var cardView = new CardView(color, x, y);
-                  activeCards.push(cardView);
-                  stage.addChild(cardView);
-                  cardView.addEventListener('click', function() {
-                      flipCard(cardView);
-                  });
-                  x += 60;
-              });
-          }
-
-          function flipCard(card) {
-              card.flip();
-              if (activeCard === null) {
-                  activeCard = card;
-              } else if (activeCard !== card) {
-                  checkMatch(activeCard, card);
-                  activeCard = null;
-              } else {
-                  activeCard = null;
-              }
-              stage.update();
-          }
-
-          function checkMatch(firstCard, secondCard) {
-              if (firstCard.getColor() === secondCard.getColor()) {
-                // Match found.  Remove both cards.
-                activeCard.removeAllEventListeners();
-                card.removeAllEventListeners();
-                cardsFlipped += 2;
-                checkVictory();
-              } else {
-                // This is not a match; reset cards.
-                firstCard.flip();
-                secondCard.flip();
-              }
-          }
-
-          function checkVictory() {
-              if (cardsFlipped === activeCards.length) {
-                  // I never did like a game with a clear ending.
-                  startGame();
-              }
-          }
-
-          function startGame() {
-            activeCard = null;
-            cardsFlipped = 0;
-            initCards();
-            stage.update();
-          }
-
-          startGame();
+          gameBoard.resetBoard();
       });
     </script>
     <h1>Memory Game</h1>
