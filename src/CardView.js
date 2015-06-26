@@ -32,7 +32,7 @@ CardView.prototype.initialize = function(color, x, y) {
     }
 
     function setSelected(isSelected) {
-        if (isSelected) {
+        if (!!isSelected) {
             vm.shadow = new createjs.Shadow("#222222", 1, 1, 1);
         } else {
             vm.shadow = null;
