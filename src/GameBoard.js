@@ -65,8 +65,11 @@ function GameBoard(canvas) {
             checkVictory();
         } else {
             // This is not a match; reset cards.
-            firstCard.flip();
-            secondCard.flip();
+            // Use setTimeout to make call asynchronous.
+            setTimeout(function() {
+                firstCard.flip();
+                secondCard.flip();
+            }, 1);
         }
     }
 
