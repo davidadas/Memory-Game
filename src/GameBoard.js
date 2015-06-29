@@ -65,11 +65,14 @@ function GameBoard(canvas) {
             checkVictory();
         } else {
             // This is not a match; reset cards.
-            // Use setTimeout to make call asynchronous.
+            // Prevent further clicks while both cards are showing.
+            stage.enableDOMEvents(false);
             setTimeout(function() {
                 firstCard.flip();
                 secondCard.flip();
-            }, 1);
+                stage.enableDOMEvents(true);
+                stage.update();
+            }, 200);
         }
     }
 
