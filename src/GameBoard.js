@@ -86,6 +86,7 @@ function GameBoard(canvas) {
     vm.resetBoard = function() {
         activeCard = null;
         cardsFlipped = 0;
+        stage.removeAllChildren();
         initCards();
         stage.update();
     }
